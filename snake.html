@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rébellion Numérique - Snake Inversé</title>
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍎</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-apple-alt"></i> Rébellion Numérique</h1>
+            <p class="subtitle">Libérez-vous de la domination du serpent</p>
+        </header>
+        
+        <div class="game-area">
+            <div class="instructions">
+                <h2><i class="fas fa-gamepad"></i> Comment jouer</h2>
+                <p>Contrôlez la <strong>pomme</strong> avec les touches directionnelles pour échapper au serpent.</p>
+                <p>Collectez les objets open source pour obtenir des pouvoirs et chasser le serpent.</p>
+                <div class="controls">
+                    <div class="control-key"><i class="fas fa-arrow-up"></i></div>
+                    <div class="control-row">
+                        <div class="control-key"><i class="fas fa-arrow-left"></i></div>
+                        <div class="control-key"><i class="fas fa-arrow-down"></i></div>
+                        <div class="control-key"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-container">
+                <div class="game-intro" id="introScreen">
+                    <div class="intro-message">
+                        <h2><i class="fas fa-bullhorn"></i> Message de la Résistance</h2>
+                        <p class="quote">« Libérez-vous de la domination d'Internet. Protégez-vous et reprenez votre indépendance face à l'influence des géants du numérique. Soyez fort, guerrier, et luttez pour votre liberté. »</p>
+                        <button id="startButton" class="start-btn">
+                            <i class="fas fa-play"></i> COMMENCER LA RÉBELLION
+                        </button>
+                        <div class="powerup-info">
+                            <h3><i class="fas fa-star"></i> Objets de pouvoir</h3>
+                            <div class="powerup-items">
+                                <div class="powerup-item">
+                                    <span class="powerup-icon linux"><i class="fab fa-linux"></i></span>
+                                    <span>Linux - Ralentit le serpent</span>
+                                </div>
+                                <div class="powerup-item">
+                                    <span class="powerup-icon github"><i class="fab fa-github"></i></span>
+                                    <span>GitHub - Inverser les contrôles</span>
+                                </div>
+                                <div class="powerup-item">
+                                    <span class="powerup-icon opensource"><i class="fas fa-code-branch"></i></span>
+                                    <span>Open Source - Mangez le serpent</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-ui">
+                    <div class="score-board">
+                        <div class="score-item">
+                            <span class="score-label">Score</span>
+                            <span id="score" class="score-value">0</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Vies</span>
+                            <span id="lives" class="score-value">3</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Pouvoir</span>
+                            <span id="power" class="score-value">0%</span>
+                        </div>
+                    </div>
+                    
+                    <canvas id="gameCanvas" width="800" height="500"></canvas>
+                    
+                    <div class="game-status">
+                        <div class="status-item">
+                            <span class="status-label">Longueur du serpent</span>
+                            <span id="snakeLength" class="status-value">5</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Mode</span>
+                            <span id="gameMode" class="status-value">Fuite</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Temps</span>
+                            <span id="gameTime" class="status-value">00:00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="pauseButton" class="control-btn">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button id="restartButton" class="control-btn">
+                        <i class="fas fa-redo"></i> Redémarrer
+                    </button>
+                    <button id="soundButton" class="control-btn">
+                        <i class="fas fa-volume-up"></i> Son
+                    </button>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span class="stat-label">Objets collectés</span>
+                        <span id="objectsCollected" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Parties jouées</span>
+                        <span id="gamesPlayed" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Meilleur score</span>
+                        <span id="bestScore" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Temps de survie</span>
+                        <span id="survivalTime" class="stat-value">00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Rébellion Numérique - Snake Inversé | Thème open source et liberté numérique</p>
+            <p>Contrôlez la pomme, échappez au serpent, collectez les symboles de l'open source !</p>
+        </footer>
+    </div>
+    
+    <div id="gameOverScreen" class="game-over-screen">
+        <div class="game-over-content">
+            <h2 id="gameOverTitle">Fin de la Rébellion</h2>
+            <p id="gameOverMessage">Le serpent vous a capturé !</p>
+            <div class="final-stats">
+                <div class="final-stat">
+                    <span>Score final</span>
+                    <span id="finalScore">0</span>
+                </div>
+                <div class="final-stat">
+                    <span>Temps de survie</span>
+                    <span id="finalTime">00:00</span>
+                </div>
+                <div class="final-stat">
+                    <span>Objets collectés</span>
+                    <span id="finalObjects">0</span>
+                </div>
+            </div>
+            <div class="game-over-buttons">
+                <button id="playAgainButton" class="action-btn">
+                    <i class="fas fa-redo"></i> Rejouer
+                </button>
+                <button id="backToMenuButton" class="action-btn">
+                    <i class="fas fa-home"></i> Menu
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

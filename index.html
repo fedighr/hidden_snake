@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveLocal - Stockage en ligne hors ligne</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-cloud-upload-alt logo-icon"></i>
+            <div>
+                <div class="logo-text">DriveLocal<span class="logo-subtext">FR</span></div>
+            </div>
+        </div>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" id="nav-files" class="active">Mes fichiers</a></li>
+                <li><a href="#" id="nav-recents">Récents</a></li>
+                <li><a href="#" id="nav-shared">Partagés</a></li>
+                <li><a href="#" id="nav-trash">Corbeille</a></li>
+            </ul>
+            
+            <div class="user-info">
+                <div class="connection-status online" id="connectionStatus">
+                    <div class="status-dot"></div>
+                    <span>En ligne</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle" style="font-size: 32px; color: var(--primary-color);"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <h1 class="page-title" id="page-title">Mes fichiers</h1>
+        <p class="page-description" id="page-description">Tous vos fichiers sont stockés localement sur cet appareil et accessibles hors ligne. La limite de taille est de 1 Mo par fichier.</p>
+        
+        <div class="stats-container">
+            <div class="stat-card stat-1">
+                <div class="stat-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="fileCount">0</h3>
+                    <p>Fichiers stockés</p>
+                </div>
+            </div>
+            
+            <div class="stat-card stat-2">
+                <div class="stat-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="storageUsed">0 Ko</h3>
+                    <p>Espace utilisé</p>
+                </div>
+            </div>
+            
+            <div class="stat-card stat-3">
+                <div class="stat-icon">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="connectionType">Hors ligne</h3>
+                    
+                    <p>Statut de connexion</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="drop-zone-container" id="drop-zone-container">
+            <div class="drop-zone" id="dropZone">
+                <i class="fas fa-cloud-upload-alt drop-zone-icon"></i>
+                <h3>Déposez vos fichiers ici</h3>
+                <p>Glissez et déposez vos fichiers dans cette zone ou cliquez pour les sélectionner. Taille maximale : 1 Mo par fichier.</p>
+                <button class="browse-button" id="browseButton">Parcourir les fichiers</button>
+                <input type="file" class="file-input" id="fileInput" multiple>
+            </div>
+        </div>
+        
+        <div class="files-container">
+            <div class="files-header">
+                <h3 id="files-header-title">Fichiers récents</h3>
+                <div class="files-count">
+                    <span id="totalFiles">0 fichiers</span>
+                </div>
+            </div>
+            
+            <div class="files-list" id="filesList">
+                <div class="empty-state">
+                    <i class="fas fa-folder-open empty-state-icon"></i>
+                    <h3>Aucun fichier</h3>
+                    <p>Déposez ou téléchargez des fichiers pour les voir apparaître ici.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="offline-page" id="offlinePage">
+        <div class="error-container">
+            <div class="error-icon">
+                <i class="fas fa-wifi-slash"></i>
+            </div>
+            <h1>Erreur de connexion</h1>
+            <ul type="none"> 
+                <li>Une perte de connexion Wi-Fi ou mobile</li>
+                <li>Un problème de réseau local</li>
+                <li>Une maintenance serveur (peu probable en mode local)</li>
+                <li>Votre navigateur bloque les requêtes réseau</li>
+            </ul>
+            <p class="error-message">DriveLocal nécessite une connexion Internet pour fonctionner.</p>
+            
+            <div class="error-details-link">
+                <a href="#" id="showDetailsLink">Pour plus de détails, cliquez ici</a>
+            </div>
+            
+            <div class="error-details" id="errorDetails">
+                <p><strong>Êtes-vous fatigué(e) des problèmes avec la connexion Internet ?</strong></p>
+                <form id="radio_form">
+                    <label class="custom-radio">
+                        <input type="radio" id="oui" name="choix" value="oui" />
+                        <span class="checkmark"></span> Oui
+                    </label>
+                    <p></p>
+                    <label class="custom-radio">
+                        <input type="radio" id="non" name="choix" value="non" />
+                        <span class="checkmark"></span> Non
+                    </label>
+                    <p></p>
+                    <button onclick="goToPage(event)" class="button">Soumettre</button>
+                    <p id="message"></p>
+                </form>    
+                <p></p>
+            </div>
+            
+            <div class="retry-container">
+                <button class="retry-button" id="retryButton">
+                    <i class="fas fa-redo"></i> Réessayer
+                </button>
+            </div>
+            
+            <div class="offline-tip">
+                <p><i class="fas fa-lightbulb"></i> Conseil : Vérifiez votre connexion Wi-Fi ou désactivez le mode avion.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="copyright">
+            &copy; 2025 DriveLocal. Tous droits réservés.
+        </div>
+        <div class="footer-links">
+            <a href="#">Confidentialité</a>
+            <a href="#">Conditions d'utilisation</a>
+            <a href="#">Aide</a>
+            <a href="#">À propos</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
